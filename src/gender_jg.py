@@ -19,7 +19,7 @@ class gender_judge():
         name,gender = make_list.make_list()
         for n in name:
             li = make_list.bigram(n)
-            self.bi_name.append(li + ["E" +li[-1]])
+            self.bi_name.append(li + ["E" +li[-1]] + ["E" + li[-1][-1]])
         #pprint.pprint(bi_name)
         self.gender_list = [1 if i == "m" else 0 for i in gender]
         #print(self.gender_list)
@@ -43,8 +43,8 @@ class gender_judge():
         for i,pro in enumerate(test_proba):
             if pro == self.t_test[i]:
                 con+=1
-            else:
-                print(''.join(self.x_test[i]),self.t_test[i])
+            #else:
+            #    print(,self.t_test[i])
         print(con/len(self.t_test))
         #print(reg_model.score(x_train, t_train))
         return None
