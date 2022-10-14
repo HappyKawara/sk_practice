@@ -29,8 +29,10 @@ class gender_judge():
         self.mlb.classes_
         #pprint.pprint(self.bi_name)
         x_train, self.x_test, self.t_train, self.t_test = train_test_split(self.bi_name, self.gender_list, test_size=0.3, random_state=0)
+        print(x_train,self.x_test,self.t_train,self.t_test)
         self.train_features = self.mlb.transform(x_train)
         self.test_features = self.mlb.transform(self.x_test)
+        print(self.test_features)
         print("loading")
 
     def sv(self):
@@ -64,7 +66,8 @@ class gender_judge():
     def xgboost(self):
         classifier = XGBClassifier(objective='binary:logistic', n_estimators=300, learning_rate=0.2)
         print("xboost")
-        classifier.fit( self.train_features, self.t_train )
+        print(self.train_features,self.t_train)
+        classifier.fit(self.train_features, self.t_train)
         test_proba = classifier.predict(self.test_features)
         print(test_proba)
         con = 0
@@ -74,9 +77,10 @@ class gender_judge():
         print(con/len(self.t_test))
 
     def main(self):
-        gender_judge().sv()
-        gender_judge().logistic_regression()
-        gender_judge().xgboost()
+        #gender_judge().sv()
+        #gender_judge().logistic_regression()
+        #gender_judge().xgboost()
+        return None
 
 if __name__ == '__main__':
     gender_judge().main()

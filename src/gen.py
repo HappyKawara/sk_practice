@@ -31,29 +31,27 @@ class gender_judge():
         self.classifier = XGBClassifier(objective='binary:logistic', n_estimators=300, learning_rate=0.2)
         print("xgboost")
         self.classifier.fit( self.train_features, gender_list )
-        self.server=rospy.Service('/gender_jg',StringToString,self.main)
+        #self.server=rospy.Service('/gender_jg',StringToString,self.main)
         rospy.loginfo("server is ready")
 
     def main(self,name):
-        name = str(name.req).lower()
+        #name = str(name.req)
         print(name)
         bi_name = []
         li = make_list.bigram(name)
         bi_name.append(li + ["E" +li[-1]] + ["E" + li[-1][-1]])
         print(bi_name)
         name_features = self.mlb.transform(bi_name)
+        print(name_features)
 
-        date = self.classifier.predict(name_features)
-        if date[0] == 1:
-            return "Male",True
-        elif date[0] == 0:
-            return "Female",True
-        else:
-            return None,False
+        result_date = self.classifier.predict(name_features)
+
+        print(result_date)
+        return result_date,True
 
 
 
 if __name__ == '__main__':
     rospy.init_node('gender_jg')
-    gender_judge()
-    rospy.spin()
+    a = gender_judge()
+    a.main("Oliver")
