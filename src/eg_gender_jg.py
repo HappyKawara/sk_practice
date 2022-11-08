@@ -45,7 +45,7 @@ class gender_judge():
                 bi_female.append([f[i:i+2] for i in range(len(f) - 1)] + ["E" + m[-2] + m[-1]] + ["E" + m[-1]])
         train_features = bi_male + bi_female
         print(bi_male[:100:])
-        t_test = [0 for i in range(len(male))] + [1 for i in range(len(female))]
+        t_test = [1 for i in range(len(male))] + [0 for i in range(len(female))]
         test_features = self.mlb.transform(train_features)
         classifier.fit(self.train_features,self.gender_list)
         test_proba = classifier.predict(test_features)
@@ -54,10 +54,13 @@ class gender_judge():
         for i,pro in enumerate(test_proba):
             if pro == t_test[i]:
                 con+=1
-        print(con/len(t_test))
-
-
-
+        a = con/len(t_test)
+        print(a)
+        with open('xg_result.txt',"w") as f:
+            count = 0
+            for t,ts in zip(t_test,test_proba):
+                f.write(str(t)+str(ts)+str(train_features[count])+"\n")
+                count+=1
 
 if __name__ == '__main__':
     #rospy.init_node('gender_jg')
