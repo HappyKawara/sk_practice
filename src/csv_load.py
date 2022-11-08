@@ -10,15 +10,15 @@ def main():
     with open('eg_male.csv') as fm:
         reader = csv.reader(fm)
         for row in reader:
-            male += [re.sub('-','',name.lower()) for name in row if re.match(r'\D|\.|^\n',name) ]
+            male += [re.sub("-|\.|'",'',name.lower()) for name in row if re.match("\D",name)]
     female = []
     with open('eg_female.csv') as ff:
         reader = csv.reader(ff)
         for row in reader:
-            female += [re.sub('-','',name.lower()) for name in row if re.match(r'\D|\.|^\n|\"',name) ]
+            female += [re.sub("-|\.|'",'',name.lower()) for name in row if re.match("\D",name)]
 
     male = list(set(male))
     female = list(set(female))
     return male[1::],female[1::]
 if __name__ == '__main__':
-    pprint.pprint(main()[1])
+    pprint.pprint(main()[0])
