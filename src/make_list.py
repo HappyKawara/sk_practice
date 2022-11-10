@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import re
+import os
+
+file_path = os.path.expanduser('~/catkin_ws/src/sk_practice/config/')
 
 def make_list():
     name = []
     gender = []
-    with open('yob2021.txt','r') as f:
+    with open(file_path + 'yob2021.txt','r') as f:
         lines = f.read()
         lines = lines.lower()
         l = re.split(',|\n',lines)
