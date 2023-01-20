@@ -30,3 +30,7 @@
  11 if x.result:
  12     print(x.result_data)
 ```
+
+## 使っている名前のデータ
+- [yob2021.txt](https://www.ssa.gov/oact/babynames/limits.html)
+
