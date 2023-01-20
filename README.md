@@ -17,6 +17,7 @@
 ## サーバの起動
 
 `$ rosrun sk_practice server_gender_jg.py `
+
 （make_list.py から import して使っているので server_gender_jg.py と同じところに置いとかないとnot fond errorになると思う）
 
 ## クライアントのプログラム例
