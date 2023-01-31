@@ -5,7 +5,7 @@ import rospy
 from happymimi_voice_msgs.srv import StringToString
 from happymimi_voice_msgs.srv import StringToStringResponse
 
-req = "avian"
+req = "Liam"
 ge = rospy.ServiceProxy('/gender_jg',StringToString)
 x = ge(req)
 if x.result:

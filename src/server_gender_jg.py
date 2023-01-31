@@ -11,6 +11,8 @@ from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
 from happymimi_voice_msgs.srv import StringToString
 import rospy
+import pickle
+
 
 #from sklearn.linear_model import LinearRegression
 
@@ -28,9 +30,10 @@ class gender_judge():
         self.mlb.classes_
         self.train_features = self.mlb.transform(bi_name)
         print("loading")
-        self.classifier = XGBClassifier(objective='binary:logistic', n_estimators=300, learning_rate=0.2)
-        print("xgboost")
-        self.classifier.fit( self.train_features, gender_list )
+        #self.classifier = XGBClassifier(objective='binary:logistic', n_estimators=300, learning_rate=0.2)
+        #print("xgboost")
+        #self.classifier = svm.SVC(probability=True, C=0.1)
+        #self.classifier.fit( self.train_features, gender_list )
         self.server=rospy.Service('/gender_jg',StringToString,self.main)
         rospy.loginfo("server is ready")
 
@@ -43,6 +46,16 @@ class gender_judge():
         print(bi_name)
         name_features = self.mlb.transform(bi_name)
 
+        with open('fit.pkl', 'rb') as f:
+            self.classifier = pickle.load(f)
+            date = self.classifier.predict(name_features)
+            if date[0] == 1:
+                return "Male",True
+            elif date[0] == 0:
+                return "Female",True
+            else:
+                return None,False
+        '''
         date = self.classifier.predict(name_features)
         if date[0] == 1:
             return "Male",True
@@ -50,6 +63,7 @@ class gender_judge():
             return "Female",True
         else:
             return None,False
+        '''
 
 
 
